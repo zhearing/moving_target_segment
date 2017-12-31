@@ -21,10 +21,10 @@ images文件夹内为所使用的数据，本实验选择使用traffic文件夹�
 ### 实验结果
 
 #### 帧间差分法
-<img src="framedifferential/figure.jpg">
+<img src="framedifferential/figure.jpg"></br>
 #### Horn-Schunck光流算法
-<img src="opticflow/figure.jpg" >
+<img src="opticflow/figure.jpg" ></br>
 #### Lucas-Kanade光流算法
-<img src="opticflow/figure2.jpg">
+<img src="opticflow/figure2.jpg"></br>
 
 
