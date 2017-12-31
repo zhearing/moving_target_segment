@@ -1,5 +1,5 @@
-#moving_target_segment
-##运动目标分割
+# moving_target_segment
+## 运动目标分割
 
 images文件夹内为所使用的数据，本实验选择使用traffic文件夹内的9帧图片
 
@@ -20,11 +20,11 @@ images文件夹内为所使用的数据，本实验选择使用traffic文件夹�
 
 ### 实验结果
 
-####帧间差分法
+#### 帧间差分法
 <img src="framedifferential/figure.jpg">
-####Horn-Schunck光流算法
+#### Horn-Schunck光流算法
 <img src="opticflow/figure.jpg" >
-####Lucas-Kanade光流算法
+#### Lucas-Kanade光流算法
 <img src="opticflow/figure2.jpg">
 
 
