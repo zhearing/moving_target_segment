@@ -2,7 +2,7 @@ clear;
 clc;
 close all;
 
-%% 读入图片
+%% Read in the picture
 figure;
 N_image = 9;
 Cell_image=cell(1,N_image);
@@ -13,7 +13,7 @@ for i=1:9
     imshow(Cell_image{1,i}), title('figure of traffic');
 end
 
-%% 转化为灰度图像
+%% Convert to grayscale image
 figure;
 traffic = cell(1,9);
 for i=1:9
@@ -25,7 +25,7 @@ for i=1:9
     imshow(traffic{1,i}), title('gray figure of traffic');
 end
 
-%% 帧间差分
+%% gray correlation frame differenence
 D_image = cell(1,8);
 for i=1:8
     D_image{1,i}=traffic{1,i+1} - traffic{1,i};
@@ -39,7 +39,7 @@ image_k = Cell_image{1,k};
 row = size(image_k,1);
 column = size(image_k,2);
 
-%% 阈值化，得到二值化图像
+%% Thresholding to obtain a binarized image
 threshold = 50;
 image = D_image{1,k};
 New_image = image;
@@ -60,7 +60,7 @@ imshow(D_image{1,k}),title('fig.3 Interframe difference image');
 subplot(234);
 imshow(Threshold_image),title('fig.4 binarized differential image');
 
-%% 形态学去噪，先腐蚀再膨胀
+%% Morphology denoising, first corrosion and then expansion
 s0 = strel('square',1);
 s1 = strel('square',8);
 Threshold_image = imdilate(Threshold_image, s1);
@@ -68,7 +68,7 @@ Threshold_image = imerode(Threshold_image,s0);
 subplot(235);
 imshow(Threshold_image),title('fig.5 Morphological operation of the differential image');
 
-%% 标记
+%% mark
 Image = mark(Cell_image{1,5} ,Threshold_image);
 subplot(236);
 imshow(Image),title('fig.6 moving target');

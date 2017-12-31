@@ -1,7 +1,7 @@
 function [ I_output ] = mark( I_src, I_ref )
-% 根据所给的参考图像（像素值为0或255）给原图像标记
+% The original image is marked according to the given reference image (pixel value 0 or 255)
 
-% 获取参考图像中连通单元的数目
+% Get the number of connected cells in the reference image
 count = bwconncomp(I_ref, 8);
 Num_c = count.NumObjects;
 

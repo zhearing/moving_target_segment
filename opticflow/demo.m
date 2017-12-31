@@ -2,7 +2,7 @@ clear;
 clc;
 close all;
 
-%% 读入图片
+%% Read in the picture
 figure;
 N_image = 9;
 Cell_image=cell(1,N_image);
@@ -24,38 +24,38 @@ imshow(Gray_image{1,8}),title('fig.1 reference image');
 subplot(332);
 imshow(Gray_image{1,4}),title('fig.2 original image');
 
-%% 计算光流信息
+%% Calculate optical flow information
 Iinputg = Gray_image{1,8};
 Irefg = Gray_image{1,4};
-% 创建光流对象及类型转化对象
+% Create optical flow objects and type conversion objects
 opticalFlow = vision.OpticalFlow('ReferenceFrameDelay', 1);
 converter = vision.ImageDataTypeConverter;
 
-% 修改光流对象的配置
-opticalFlow.OutputValue = 'Horizontal and vertical components in complex form'; % 返回复数形式光流图
-opticalFlow.ReferenceFrameSource = 'Input port'; % 对比两张图片，而不是视频流
-if 0 % 使用的算法
+% Modify the configuration of the optical flow object
+opticalFlow.OutputValue = 'Horizontal and vertical components in complex form'; % Returns the complex optical flow diagram
+opticalFlow.ReferenceFrameSource = 'Input port'; % Compare two pictures, not a video stream
+if 1 % The algorithm used
     opticalFlow.Method = 'Lucas-Kanade';
-    opticalFlow.NoiseReductionThreshold = 0.01; % 默认是0.0039
+    opticalFlow.NoiseReductionThreshold = 0.01; % defult:0.0039
 else
     opticalFlow.Method = 'Horn-Schunck';
-    opticalFlow.Smoothness = 0.5; % 默认是1
+    opticalFlow.Smoothness = 0.5; % defult:1
 end
 
-% 调用光流对象计算两张图片的光流
+% Call the optical flow object to calculate the optical flow of two pictures
 Iinputg_c = step(converter, Iinputg);
 Irefg_c = step(converter, Irefg);
 opticflow = step(opticalFlow, Iinputg_c, Irefg_c);
 
-%% 光流图像二值化
-% 光流场的彩色显示
+%% Optical flow image binarization
+% Optical flow of color display
 flow_H = real(opticflow);
 flow_V = imag(opticflow);
 flow_cc = computeColor(flow_H, flow_V);
 subplot(333)
 imshow(flow_cc),title('fig.3 the color flow of optical field');
 
-% 光流场的灰度显示
+% Light flow field of the gray display
 flow_gray = 255 - rgb2gray(flow_cc);
 subplot(334);
 imshow(flow_gray),title('fig.4 the optical flow of the gray-scale');
@@ -76,7 +76,7 @@ flow_gray = New_image;
 subplot(335);
 imshow(flow_gray),title('fig.5 gray-scale of the binarized optical flow field');
 
-%% 腐蚀和膨胀
+%% Corrosion and swelling
 se1 = strel('square',8);
 se0 = strel('square',1);
 flow_gray = imdilate(flow_gray, se1);
@@ -84,7 +84,7 @@ flow_gray = imerode(flow_gray,se0);
 subplot(336);
 imshow(flow_gray),title('fig.6 Morphology of the optical flowafter the gray-scale');
 
-%% 标记
+%% mark
 Image = mark(Iinputg, flow_gray);
 subplot(337)
 imshow(Image),title('fig.7 moving target');
